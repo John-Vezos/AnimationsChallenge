@@ -2,6 +2,10 @@ import { DefaultRootState, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import HomePage from '@src/containers/HomePage/Loadable';
+import MoviePage from '@src/containers/MoviePage/Loadable';
+import TestPage from '@src/containers/TestPage';
+
+import Header from '@components/Header';
 
 import GlobalFonts from '@styles/global-fonts';
 import GlobalStyle from '@styles/global-styles';
@@ -26,8 +30,11 @@ const App = () => {
   return (
     <ThemeProvider theme={isLightTheme ? theme.lightTheme : theme.darkTheme}>
       <AppWrapper>
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<HomePage />} />
+          <Route path="/movies/:id" element={<MoviePage />} />
         </Routes>
         <GlobalStyle />
         <GlobalFonts />

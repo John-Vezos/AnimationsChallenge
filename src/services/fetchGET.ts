@@ -1,5 +1,5 @@
 const fetchGET = async (url: string, signal: AbortSignal): Promise<any> => {
-  const response = await fetch(url, {signal}).catch((error) =>
+  const response = await fetch(url, { signal }).catch(error =>
     console.warn(error),
   );
   if (response === undefined) return -200;

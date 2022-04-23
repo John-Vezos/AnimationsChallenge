@@ -1,4 +1,4 @@
-import {createGlobalStyle} from './styled-components';
+import { createGlobalStyle } from './styled-components';
 
 const GlobalFonts = createGlobalStyle`
   /* ############################################################################################### */
@@ -170,7 +170,7 @@ const GlobalFonts = createGlobalStyle`
     font-family: 'SourceSerif';
     font-style: normal;
     font-weight: 600;
-    src: local("static"), url('./../assets/fonts/Source/Serif/SourceSerifPro-Semibold.ttf') format('truetype');
+    src: local("static"), url('./../assets/fonts/Source/Serif/SourceSerifPro-SemiBold.ttf') format('truetype');
   }
 
   @font-face {

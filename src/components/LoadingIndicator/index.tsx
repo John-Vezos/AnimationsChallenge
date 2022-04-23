@@ -1,7 +1,9 @@
+import { FunctionComponent } from 'react';
+
 import Circle from './Circle';
 import Wrapper from './Wrapper';
 
-const LoadingIndicator = () => (
+const LoadingIndicator: FunctionComponent = () => (
   <Wrapper>
     <Circle />
     <Circle rotate={30} delay={-1.1} />

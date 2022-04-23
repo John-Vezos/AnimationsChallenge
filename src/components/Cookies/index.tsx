@@ -1,10 +1,12 @@
-import {Fragment, FunctionComponent, useEffect, useState} from 'react';
-import {getCookie, setCookie} from 'typescript-cookie';
+import { Fragment, FunctionComponent, useEffect, useState } from 'react';
+import { getCookie, setCookie } from 'typescript-cookie';
 
 import CookiesBackdrop from './CookiesBackdrop';
 import CookiesButton from './CookiesButton';
 import CookiesContainer from './CookiesContainer';
 
+const WELCOME_MESSAGE = `${window.location.hostname} uses cookies to enhance your online experience. By using this website you agree to our Cookie Policy.`;
+const ACCEPT_COOKIES = 'Accept Cookies';
 let timeoutListener: NodeJS.Timeout | null = null;
 const index: FunctionComponent = () => {
   const [cookiesAllow, setCookiesAllow] = useState(
@@ -18,7 +20,7 @@ const index: FunctionComponent = () => {
   }, []);
 
   const cookieModalHandler = () => {
-    setCookie('cookies-allow', true, {expires: 365 * 2});
+    setCookie('cookies-allow', true, { expires: 365 * 2 });
     timeoutListener = setTimeout(() => setCookiesAllow(false), 1000);
     setIsCookiesModalShow(false);
   };
@@ -29,13 +31,9 @@ const index: FunctionComponent = () => {
         <Fragment>
           <CookiesBackdrop display={isCookiesModalShow ? 'block' : 'none'} />
           <CookiesContainer expand={isCookiesModalShow}>
-            {document.getElementsByTagName('title')[0].text
-              ? document.getElementsByTagName('title')[0].text
-              : 'This website'}{' '}
-            uses cookies to enhance your online experience. By using this
-            website you agree to our Cookie Policy.
+            {WELCOME_MESSAGE}
             <CookiesButton type="button" onClick={cookieModalHandler}>
-              Accept Cookies
+              {ACCEPT_COOKIES}
             </CookiesButton>
           </CookiesContainer>
         </Fragment>

@@ -45,7 +45,21 @@ const GlobalTemplate = createGlobalStyle<IThemeInterface>`
   props.theme.scrollBarBg};
     scrollbar-width: normal;
   }
+
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px ${props =>
+      props.theme.primaryBackground} inset !important;
+    -webkit-text-fill-color:  ${props => props.theme.primary}  !important;
+
+    }
  
+  img {
+    vertical-align: middle;
+  }
 `;
 
 export default GlobalTemplate;

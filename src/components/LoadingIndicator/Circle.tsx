@@ -1,4 +1,6 @@
-import styled, {keyframes} from '@styles/styled-components';
+import { FunctionComponent } from 'react';
+
+import styled, { keyframes } from '@styles/styled-components';
 
 const circleFadeDelay = keyframes`
   0%,
@@ -25,7 +27,7 @@ const CirclePrimitive = styled.div<Props>`
   left: 0;
   top: 0;
 
-  ${(props) =>
+  ${props =>
     props.rotate &&
     `
       -webkit-transform: rotate(${props.rotate}deg);
@@ -40,7 +42,7 @@ const CirclePrimitive = styled.div<Props>`
     background-color: #999;
     border-radius: 100%;
     animation: ${circleFadeDelay} 1.2s infinite ease-in-out both;
-    ${(props) =>
+    ${props =>
       props.delay &&
       `
         -webkit-animation-delay: ${props.delay}s;
@@ -49,7 +51,7 @@ const CirclePrimitive = styled.div<Props>`
   }
 `;
 
-const Circle = (props: Props) => {
+const Circle: FunctionComponent<Props> = (props: Props) => {
   return <CirclePrimitive {...props} />;
 };
 

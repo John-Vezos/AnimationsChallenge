@@ -18,7 +18,7 @@ const MovieItem: FunctionComponent<Props> = ({ item, order, listLength }) => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`${item.id as number}`);
+    navigate(`/movies/${item.id as number}`);
   };
   return (
     <Wrapper

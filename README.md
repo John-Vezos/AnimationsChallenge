@@ -13,6 +13,13 @@
 -   postcss loader (with [autoprefixer](https://www.npmjs.com/package/autoprefixer) and [cssnano](https://www.npmjs.com/package/cssnano))
 -   [husky](https://www.npmjs.com/package/husky) prehooks and [lint-staged](https://www.npmjs.com/package/lint-staged)
 
+## Documentation
+1. In Home page (path: / or /movies), you will find a search input. Fill in your movie title you want to search and then
+hit enter or wait 600ms to automatically search.
+2. The results are presented to you with an animation {slide in from left} (Anim time: 200ms); After this the animation on image start (fade in, anim duration: 500ms);
+3. Once all the list items are animated, release date start pulse from normal color to gold;
+4. You can click one movie from the list and go to this movie details. (path: /movies/:id); There you can see some details about this movie. (like: Rating, IMDB link, etc).
+
 ## Quick start
 
 To run this locally:

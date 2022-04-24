@@ -1,22 +1,17 @@
 import { Fragment, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import H1 from '@src/components/H1';
+import H2 from '@src/components/H2';
+import { COMBINE_QUERIES, IMAGE_URL, MOVIE_API } from '@src/constants';
 import SpaceBetween from '@src/containers/MoviePage/SpaceBetween';
 import fetchGET from '@src/services/fetchGET';
 
 import Categories from './Categories';
-import H1 from './H1';
-import H2 from './H2';
 import Img from './Img';
 import ImgCenter from './ImgCenter';
 import RatingInfo from './RatingInfo';
-
-const MOVIES_API = 'https://api.themoviedb.org/3/movie/';
-const API_KEY = 'api_key=6de482bc8c5768aa3648618b9c3cc98a';
-const LANGUAGE = 'language=en-US';
-
-const COMBINE_QUERIES = API_KEY + '&' + LANGUAGE;
-const IMAGE_URL = 'https://image.tmdb.org/t/p/w500/';
 
 const MoviePage = () => {
   const { id } = useParams();
@@ -31,7 +26,7 @@ const MoviePage = () => {
   useEffect(() => {
     const getMovieDetails = async () => {
       const respMovieDetails = (await fetchGET(
-        `${MOVIES_API}${id as string}?${COMBINE_QUERIES}&${API_KEY}`,
+        `${MOVIE_API}${id as string}?${COMBINE_QUERIES}`,
         signal,
       )) as { [index: string]: any } | number;
 
@@ -52,19 +47,17 @@ const MoviePage = () => {
   useEffect(
     () => () => {
       controller.abort();
+      setMovieDetails(null);
     },
     [],
   );
 
   return (
     <Fragment>
-      {/*<Helmet>*/}
-      {/*  <title>Home Page</title>*/}
-      {/*  <meta*/}
-      {/*    name="description"*/}
-      {/*    content="A React.js Boilerplate application homepage"*/}
-      {/*  />*/}
-      {/*</Helmet>*/}
+      <Helmet>
+        <title>Movie | Orthogonality Ltd</title>
+        <meta name="description" content="Movie details - themoviedb" />
+      </Helmet>
       {movieDetails && (
         <div>
           <ImgCenter>

@@ -1,11 +1,10 @@
 import { FunctionComponent } from 'react';
 
 import SvgImagePlaceholder from '@src/assets/icons/ImagePlaceholder';
+import { IMAGE_URL } from '@src/constants';
 
 import Img from './Img';
 import Wrapper from './Wrapper';
-
-const IMAGE_URL = 'https://image.tmdb.org/t/p/w500/';
 
 interface Props {
   item: { [index: string]: any };

@@ -1,40 +1,46 @@
-import { FormEvent, Fragment, useState } from 'react';
+import { FormEvent, Fragment, useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
+import { MOVIES_URL } from '@src/constants';
 import Wrapper from '@src/containers/HomePage/Wrapper';
 import fetchGET from '@src/services/fetchGET';
 
 import Input from '@components/Input';
 import MovieList from '@components/MovieList';
 
-const MOVIES_API = 'https://api.themoviedb.org/3/search/movie';
-const API_KEY = 'api_key=6de482bc8c5768aa3648618b9c3cc98a';
-const INCLUDE_ADULT = 'include_adult=false';
-const LANGUAGE = 'language=en-US';
-const PAGE = 'page=1';
-const COMBINE_URL = `${MOVIES_API}?${API_KEY}&${INCLUDE_ADULT}&${LANGUAGE}&${PAGE}`;
-
+let timeoutListener: NodeJS.Timeout | null = null;
 const HomePage = () => {
   const [movieInput, setMovieInput] = useState('');
-  const [moviesList, setMoviesList] = useState<Array<{ [index: string]: any }>>(
-    [],
-  );
+  const [moviesList, setMoviesList] = useState<Array<{
+    [index: string]: any;
+  }> | null>(null);
+
+  const lastSearchInput = useRef<string | null>(null);
 
   const controller = new AbortController();
   const signal = controller.signal;
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMoviesList([]);
+    if (timeoutListener) clearTimeout(timeoutListener);
     getRelevantMovies().catch(() => {
       throw new Error(`Something went wrong!`);
     });
   };
 
   const getRelevantMovies = async () => {
+    if (lastSearchInput.current === movieInput) return;
+    lastSearchInput.current = movieInput;
+    setMoviesList(null);
     const respRelevantMovies = (await fetchGET(
-      `${COMBINE_URL}&query=${movieInput}`,
+      `${MOVIES_URL}&query=${movieInput}`,
       signal,
-    )) as { [index: string]: { [index: string]: any } };
+    )) as { [index: string]: { [index: string]: any } } | number;
+
+    if (typeof respRelevantMovies === 'number') {
+      setMoviesList([]);
+      return;
+    }
 
     setMoviesList(
       respRelevantMovies.results as Array<{ [index: string]: any }>,
@@ -46,15 +52,35 @@ const HomePage = () => {
     setMovieInput(value);
   };
 
+  useEffect(() => {
+    if (timeoutListener) clearTimeout(timeoutListener);
+    if (!movieInput) {
+      setMoviesList(null);
+      return;
+    }
+
+    timeoutListener = setTimeout(() => {
+      getRelevantMovies().catch(() => {
+        throw new Error(`Something went wrong!`);
+      });
+    }, 600);
+  }, [movieInput]);
+
+  // clear on leave page
+  useEffect(
+    () => () => {
+      clearTimeout(timeoutListener as NodeJS.Timeout);
+      setMoviesList(null);
+    },
+    [],
+  );
+
   return (
     <Fragment>
-      {/*<Helmet>*/}
-      {/*  <title>Home Page</title>*/}
-      {/*  <meta*/}
-      {/*    name="description"*/}
-      {/*    content="A React.js Boilerplate application homepage"*/}
-      {/*  />*/}
-      {/*</Helmet>*/}
+      <Helmet>
+        <title>HOME | Orthogonality Ltd</title>
+        <meta name="description" content="Movies themoviedb" />
+      </Helmet>
       <Wrapper>
         <form onSubmit={onSubmit}>
           <Input

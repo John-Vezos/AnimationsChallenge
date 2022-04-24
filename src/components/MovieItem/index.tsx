@@ -1,6 +1,8 @@
 import { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { FADE_IN_DURATION, SLIDE_IN_DURATION } from '@src/constants';
+
 import AnimationContent from '@components/AnimationContent';
 import AnimationImage from '@components/AnimationImage';
 
@@ -12,8 +14,7 @@ interface Props {
   order: number;
   listLength: number;
 }
-const SLIDE_IN_DURATION = 200;
-const FADE_IN_DURATION = 500;
+
 const MovieItem: FunctionComponent<Props> = ({ item, order, listLength }) => {
   const navigate = useNavigate();
 

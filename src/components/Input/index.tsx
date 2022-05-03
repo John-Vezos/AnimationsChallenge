@@ -1,4 +1,4 @@
-import { FormEvent, FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 import Label from '@components/Input/Label';
 import Wrapper from '@components/Input/Wrapper';
